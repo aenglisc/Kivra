@@ -14,17 +14,24 @@ components:
   schemas:
     V1UploadPost:
       type: object
+      required:
+        - file
+        - file_type
+        - sender_id
+        - receiver_id
+        - is_payable
       properties:
         file:
           type: string
           format: binary
+        file_type:
+          type: string
         sender_id:
           type: string
         receiver_id:
           type: string
         is_payable:
           type: boolean
-
 
 paths:
   /v1/upload:

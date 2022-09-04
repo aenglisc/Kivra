@@ -1,0 +1,56 @@
+openapi: 3.0.2
+
+info:
+  title: Receiver API
+  version: '1.0'
+  description: |
+    # Receiver API: find a file using receiver_id and pay if possible
+
+paths:
+  /v1/content/{receiver_id}:
+    get:
+      summary: |
+        Find files using receiver_id
+      parameters:
+        - name: receiver_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: ["unpaid", "paid", "pending"]
+                  is_payable:
+                    type: bool
+  /v1/content/{file_id}/pay:
+    post:
+      summary: |
+        Pay for payable content
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
