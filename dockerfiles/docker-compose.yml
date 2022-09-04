@@ -1,0 +1,57 @@
+services:
+  sender_api:
+    image: erlang:slim
+    stdin_open: true
+    hostname: sender_api
+    container_name: sender_api
+    networks:
+      - sender_api
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  consumer_api:
+    image: erlang:slim
+    stdin_open: true
+    hostname: consumer_api
+    container_name: consumer_api
+    networks:
+      - consumer_api
+    ports:
+      - '8081:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    hostname: db
+    container_name: db
+    image: postgres:14.5-alpine
+    restart: always
+    networks:
+      - sender_api
+      - consumer_api
+    environment:
+      - PGUSER=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes: 
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  sender_api:
+    driver: bridge
+  consumer_api:
+    driver: bridge
+
