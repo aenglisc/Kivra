@@ -1,0 +1,19 @@
+{application, openapi_sender_server, [
+    {description, "# Sender API: accept a file in binary format with metadata:   * sender id   * file type   * receiver id   * is_payable "},
+    {vsn, "1.0.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        ssl,
+        inets,
+        jsx,
+        jesse,
+        cowboy
+    ]},
+    {env, [
+    ]},
+    {modules, []},
+    {licenses, []},
+    {links, []}
+]}.

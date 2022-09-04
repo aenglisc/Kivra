@@ -1,0 +1,50 @@
+openapi: 3.0.2
+
+info:
+  title: Sender API
+  version: '1.0'
+  description: |
+    # Sender API: accept a file in binary format with metadata:
+      * sender id
+      * file type
+      * receiver id
+      * is_payable
+
+components:
+  schemas:
+    V1UploadPost:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        sender_id:
+          type: string
+        receiver_id:
+          type: string
+        is_payable:
+          type: boolean
+
+
+paths:
+  /v1/upload:
+    post:
+      summary: |
+        Upload a binary with metadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/V1UploadPost"
+      responses:
+        '201':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string

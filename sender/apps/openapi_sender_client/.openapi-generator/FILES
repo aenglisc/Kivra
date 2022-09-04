@@ -1,0 +1,7 @@
+README.md
+rebar.config
+src/openapi_sender_client.app.src
+src/openapi_sender_client__v1_upload_post_201_response.erl
+src/openapi_sender_client_default_api.erl
+src/openapi_sender_client_utils.erl
+src/openapi_sender_client_v1_upload_post.erl

@@ -5,6 +5,7 @@
   {mod, {sender_app, []}},
   {applications,
    [kernel,
+    openapi_sender_server,
     stdlib
    ]},
   {env,[]},

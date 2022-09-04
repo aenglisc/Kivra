@@ -1,0 +1,79 @@
+{
+  "openapi" : "3.0.2",
+  "info" : {
+    "description" : "# Sender API: accept a file in binary format with metadata:\n  * sender id\n  * file type\n  * receiver id\n  * is_payable\n",
+    "title" : "Sender API",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "paths" : {
+    "/v1/upload" : {
+      "post" : {
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/V1UploadPost"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_v1_upload_post_201_response"
+                }
+              }
+            },
+            "description" : "Success\n"
+          }
+        },
+        "summary" : "Upload a binary with metadata\n"
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "V1UploadPost" : {
+        "example" : {
+          "file" : "",
+          "receiver_id" : "receiver_id",
+          "sender_id" : "sender_id",
+          "is_payable" : true
+        },
+        "properties" : {
+          "file" : {
+            "format" : "binary",
+            "type" : "string"
+          },
+          "sender_id" : {
+            "type" : "string"
+          },
+          "receiver_id" : {
+            "type" : "string"
+          },
+          "is_payable" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "_v1_upload_post_201_response" : {
+        "example" : {
+          "id" : "id"
+        },
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  }
+}
