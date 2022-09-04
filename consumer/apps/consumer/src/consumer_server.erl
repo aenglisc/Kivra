@@ -1,8 +1,8 @@
--module(receiver_server).
+-module(consumer_server).
 
 -export([child_spec/0]).
 
--define(APP, receiver).
+-define(APP, consumer).
 -define(DEFAULT_ACCEPTORS_POOLSIZE, 100).
 -define(DEFAULT_IP_ADDR, "::").
 -define(DEFAULT_PORT, 8080).
@@ -11,7 +11,7 @@
     supervisor:child_spec().
 child_spec() ->
     {Transport, TransportOpts} = get_socket_transport(),
-    CowboyOpts = get_cowboy_config(receiver_logic_handler),
+    CowboyOpts = get_cowboy_config(consumer_logic_handler),
     ranch:child_spec(?MODULE, Transport, TransportOpts, cowboy_clear, CowboyOpts).
 
 get_socket_transport() ->
@@ -21,6 +21,6 @@ get_socket_transport() ->
     {ranch_tcp, #{socket_opts => [{ip, IP}, {port, Port}], num_acceptors => AcceptorsPool}}.
 
 get_cowboy_config(LogicHandler) ->
-    Routes = openapi_receiver_server_router:get_paths(LogicHandler),
+    Routes = openapi_consumer_server_router:get_paths(LogicHandler),
     Dispatch = #{dispatch => cowboy_router:compile(Routes)},
     #{env => Dispatch}.

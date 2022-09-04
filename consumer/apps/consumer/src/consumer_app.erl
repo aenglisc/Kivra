@@ -3,7 +3,7 @@
 %% @end
 %%%-------------------------------------------------------------------
 
--module(receiver_app).
+-module(consumer_app).
 
 -behaviour(application).
 

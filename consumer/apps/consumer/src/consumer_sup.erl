@@ -1,9 +1,9 @@
 %%%-------------------------------------------------------------------
-%% @doc receiver top level supervisor.
+%% @doc consumer top level supervisor.
 %% @end
 %%%-------------------------------------------------------------------
 
--module(receiver_sup).
+-module(consumer_sup).
 
 -behaviour(supervisor).
 
@@ -22,7 +22,7 @@ init([]) ->
         intensity => 0,
         period => 1
     },
-    ChildSpecs = [receiver_server:child_spec()],
+    ChildSpecs = [consumer_server:child_spec()],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions

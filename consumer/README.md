@@ -1,4 +1,4 @@
-receiver
+consumer
 =====
 
 An OTP application

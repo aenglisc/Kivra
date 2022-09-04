@@ -1,8 +1,8 @@
-{application, receiver,
+{application, consumer,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, {receiver_app, []}},
+  {mod, {consumer_app, []}},
   {applications,
    [kernel,
     stdlib

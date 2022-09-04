@@ -25,8 +25,8 @@ start_%_interactive:
 generate: \
 	generate_sender_server \
 	generate_sender_client \
-	generate_receiver_server \
-	generate_receiver_client
+	generate_consumer_server \
+	generate_consumer_client
 
 generate_%_server:
 	@echo "Generating $* API server"

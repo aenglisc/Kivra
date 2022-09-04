@@ -7,7 +7,7 @@ info:
     # Sender API: accept a file in binary format with metadata:
       * sender id
       * file type
-      * receiver id
+      * consumer id
       * is_payable
 
 components:
@@ -18,7 +18,7 @@ components:
         - file
         - file_type
         - sender_id
-        - receiver_id
+        - consumer_id
         - is_payable
       properties:
         file:
@@ -28,7 +28,7 @@ components:
           type: string
         sender_id:
           type: string
-        receiver_id:
+        consumer_id:
           type: string
         is_payable:
           type: boolean

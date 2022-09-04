@@ -1,11 +1,11 @@
--module(receiver_logic_handler).
+-module(consumer_logic_handler).
 
--behaviour(openapi_receiver_server_logic_handler).
+-behaviour(openapi_consumer_server_logic_handler).
 
 -export([handle_request/3]).
 
 -spec handle_request(
-    OperationID :: openapi_receiver_server_api:operation_id(),
+    OperationID :: openapi_consumer_server_api:operation_id(),
     Req :: cowboy_req:req(),
     Context :: #{}
 ) ->

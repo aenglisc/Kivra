@@ -1,10 +1,10 @@
 openapi: 3.0.2
 
 info:
-  title: Receiver API
+  title: Consumer API
   version: '1.0'
   description: |
-    # Receiver API: find a file by receiver_id and pay if possible
+    # Consumer API: find a file by receiver_id and pay if possible
 
 paths:
   /v1/content/{receiver_id}:
