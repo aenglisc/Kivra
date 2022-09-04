@@ -1,0 +1,6 @@
+-sname receiver
+
+-setcookie receiver_cookie
+
++K true
++A30
