@@ -1,26 +1,40 @@
 services:
   sender_api:
-    image: erlang:slim
+    image: erlang:25
+    command: bash
     stdin_open: true
     hostname: sender_api
     container_name: sender_api
+    working_dir: /app
     networks:
       - sender_api
     ports:
       - '8080:8080'
+    volumes:
+      - ../sender/rebar.config:/app/rebar.config
+      - ../sender/rebar.lock:/app/rebar.lock
+      - ../sender/apps:/app/apps
+      - ../sender/config:/app/config
     depends_on:
       db:
         condition: service_healthy
 
   consumer_api:
-    image: erlang:slim
+    image: erlang:25
+    command: bash
     stdin_open: true
     hostname: consumer_api
     container_name: consumer_api
+    working_dir: /app
     networks:
       - consumer_api
     ports:
       - '8081:8080'
+    volumes:
+      - ../consumer/rebar.config:/app/rebar.config
+      - ../consumer/rebar.lock:/app/rebar.lock
+      - ../consumer/apps:/app/apps
+      - ../consumer/config:/app/config
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +47,8 @@ services:
     networks:
       - sender_api
       - consumer_api
+    ports:
+      - 5432:5432
     environment:
       - PGUSER=postgres
       - POSTGRES_USER=postgres
