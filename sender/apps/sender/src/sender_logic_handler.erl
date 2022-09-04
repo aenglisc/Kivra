@@ -10,7 +10,7 @@
     Context :: #{}
 ) ->
     {Status :: cowboy:http_status(), Headers :: cowboy:http_headers(), Body :: jsx:json_term()}.
-handle_request(OperationID, _Req, _Context) ->
+handle_request('V1UploadPost', _Req, _Context) ->
     {201, #{}, #{<<"id">> => <<"some_id">>}};
 handle_request(OperationID, Req, Context) ->
     error_logger:error_msg("Unknown request to process: ~p~n", [{OperationID, Req, Context}]),
