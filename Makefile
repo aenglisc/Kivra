@@ -1,3 +1,9 @@
+build:
+	@echo "Building dev environment"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		build
+
 up:
 	@echo "Starting dev environment"
 	@docker compose \
@@ -10,9 +16,17 @@ down:
 		-f ./dockerfiles/docker-compose.yml \
 		down --remove-orphans
 
+start_%_interactive:
+	@echo "Starting $*"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api rebar3 shell
+
 generate: \
 	generate_sender_server \
-	generate_sender_client
+	generate_sender_client \
+	generate_receiver_server \
+	generate_receiver_client
 
 generate_%_server:
 	@echo "Generating $* API server"
