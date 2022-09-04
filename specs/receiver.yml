@@ -4,13 +4,13 @@ info:
   title: Receiver API
   version: '1.0'
   description: |
-    # Receiver API: find a file using receiver_id and pay if possible
+    # Receiver API: find a file by receiver_id and pay if possible
 
 paths:
   /v1/content/{receiver_id}:
     get:
       summary: |
-        Find files using receiver_id
+        Find files by receiver_id
       parameters:
         - name: receiver_id
           in: path
