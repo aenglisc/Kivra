@@ -67,7 +67,7 @@ paths:
                 properties:
                   message:
                     type: string
-                  id:
+                  content_id:
                     type: string
         '200':
           description: |
@@ -78,4 +78,6 @@ paths:
                 type: object
                 properties:
                   message:
+                    type: string
+                  content_id:
                     type: string
