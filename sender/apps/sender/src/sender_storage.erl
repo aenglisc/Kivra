@@ -30,15 +30,17 @@ upload(Body) ->
     SenderID = maps:get(<<"sender_id">>, Body),
     ReceiverID = maps:get(<<"receiver_id">>, Body),
     FileType = maps:get(<<"file_type">>, Body),
+    FileName = maps:get(<<"file_name">>, Body),
     IsPayable = maps:get(<<"is_payable">>, Body),
     Query = lists:concat([
         "insert into content ",
-        "(sender_id, receiver_id, file_content, file_type, md5, is_payable) ",
-        "values ($1, $2, $3, $4, $5, $6)"
+        "(sender_id, receiver_id, file_content, file_name, file_type, md5, is_payable) ",
+        "values ($1, $2, $3, $4, $5, $6, $7)",
+        "returning id"
     ]),
-    QueryArgs = [SenderID, ReceiverID, FileContent, FileType, MD5, IsPayable],
+    QueryArgs = [SenderID, ReceiverID, FileContent, FileName, FileType, MD5, IsPayable],
     case pgapp:with_transaction(fun() -> pgapp:equery(Query, QueryArgs) end) of
-        {ok, ID} ->
+        {ok, 1, _Meta, [{ID}]} ->
             {ok, ID};
         {error, {error, error, _, unique_violation, _, _}} ->
             {ok, already_uploaded};
