@@ -51,14 +51,14 @@ generate_%_client:
 				--additional-properties packageName=openapi_$*_client
 
 new_migration:
-	touch migrations/$(NOW).sql
-	echo "-- :up\n\n-- :down" > migrations/$(NOW).sql
+	@echo "Creating a new migration"
+	@touch migrations/$(NOW).sql
+	@echo "-- :up\n\n-- :down" > migrations/$(NOW).sql
 
 pg_shell:
 	@echo "Starting $*"
 	@docker compose \
 		-f ./dockerfiles/docker-compose.yml \
 		exec db psql
-
 
 NOW=$(shell date +"%s")
