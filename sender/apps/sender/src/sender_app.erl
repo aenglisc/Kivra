@@ -11,7 +11,7 @@
 
 start(_StartType, _StartArgs) ->
     Storage = application:get_env(sender, storage, sender_storage),
-    ok = Storage:init(),
+    ok = Storage:start(),
     sender_sup:start_link().
 
 stop(_State) ->

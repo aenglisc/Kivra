@@ -14,7 +14,7 @@ handle_request('UploadPost', _Req, Context) ->
     Storage = storage(),
     Body = maps:get('V1UploadPost', Context),
     case Storage:upload(Body) of
-        {ok, already_uploaded} ->
+        {ok, {already_uploaded, _ID}} ->
             {200, #{}, #{<<"message">> => <<"Already uploaded">>}};
         {ok, ContentID} ->
             {201, #{}, #{<<"message">> => <<"Success!">>, <<"id">> => integer_to_binary(ContentID)}}
