@@ -29,6 +29,7 @@ init_per_suite(Config) ->
     Config.
 
 end_per_suite(_Config) ->
+    sender_storage_mock:stop(),
     ok.
 
 upload_success(_Config) ->
@@ -56,10 +57,14 @@ upload_already_done(_Config) ->
         'receiver_id' => <<"some_other_id">>,
         'is_payable' => false
     },
-    Result = openapi_sender_client_default_api:upload_post(#{}, Body, #{
+    Result0 = openapi_sender_client_default_api:upload_post(#{}, Body, #{
         cfg => #{host => "http://localhost:8080"}
     }),
-    ?assertMatch({ok, _Body, #{status := 200}}, Result).
+    ?assertMatch({ok, _Body, #{status := 201}}, Result0),
+    Result1 = openapi_sender_client_default_api:upload_post(#{}, Body, #{
+        cfg => #{host => "http://localhost:8080"}
+    }),
+    ?assertMatch({ok, _Body, #{status := 200}}, Result1).
 
 upload_400(_Config) ->
     InvalidBody = #{
