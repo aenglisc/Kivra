@@ -15,6 +15,7 @@ services:
       - ../sender/rebar.lock:/app/rebar.lock
       - ../sender/apps:/app/apps
       - ../sender/config:/app/config
+      - ../sender/test:/app/test
       - ../migrations:/app/priv/migrations
     depends_on:
       db:
