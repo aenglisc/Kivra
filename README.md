@@ -6,7 +6,7 @@ The backend should be composed of 2 APIs:
     * file type
     * receiver id
     * payable?
-  * Receiver API: query by receiver id, pay
+  * Consumer API: query by receiver id, pay
   
 ## Requirements
   * `make`
@@ -17,4 +17,5 @@ The backend should be composed of 2 APIs:
   -|-
   `make up`|Start the dev environment
   `make down`|Stop the dev environment
-
+  `make generate`|Generate API stubs
+  `make start_{sender|consumer}_interactive`|Start an api with a shell
