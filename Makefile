@@ -49,3 +49,9 @@ generate_%_client:
 				-g erlang-client \
 				-o /local/$*/apps/openapi_$*_client \
 				--additional-properties packageName=openapi_$*_client
+
+new_migration:
+	touch migrations/$(NOW).sql
+	echo "-- :up\n\n-- :down" > migrations/$(NOW).sql
+
+NOW=$(shell date +"%s")
