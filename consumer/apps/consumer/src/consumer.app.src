@@ -3,10 +3,14 @@
   {vsn, "0.1.0"},
   {registered, []},
   {mod, {consumer_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
+  {applications, [
+      kernel,
+      epgsql,
+      pgapp,
+      pgsql_migration,
+      openapi_consumer_server,
+      stdlib
+  ]},
   {env,[]},
   {modules, []},
 
