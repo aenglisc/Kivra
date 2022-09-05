@@ -19,3 +19,4 @@ The backend should be composed of 2 APIs:
   `make down`|Stop the dev environment
   `make generate`|Generate API stubs
   `make start_{sender,consumer}_interactive`|Start an api with a shell
+  `make test`|Run tests
