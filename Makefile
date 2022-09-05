@@ -18,10 +18,10 @@ down:
 
 test: \
 	test_sender \
-	# test_consumer
+	test_consumer
 
 test_%:
-	@echo "Testing sender"
+	@echo "Testing $*"
 	@docker compose \
 		-f ./dockerfiles/docker-compose.yml \
 		exec $*_api rebar3 ct
