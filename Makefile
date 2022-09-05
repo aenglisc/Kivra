@@ -16,6 +16,16 @@ down:
 		-f ./dockerfiles/docker-compose.yml \
 		down --remove-orphans
 
+test: \
+	test_sender \
+	# test_consumer
+
+test_%:
+	@echo "Testing sender"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api rebar3 ct
+
 start_%_interactive:
 	@echo "Starting $*"
 	@docker compose \
