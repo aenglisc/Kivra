@@ -4,10 +4,48 @@ info:
   title: Consumer API
   version: '1.0'
   description: |
-    # Consumer API: find a file by receiver_id and pay if possible
+    # Consumer API: find content by receiver_id and pay if possible
+
+servers:
+  - url: http://localhost:{port}/{basePath}
+    description: Development server
+    variables:
+      port:
+        default: '8081'
+      basePath:
+        default: v1
+
+components:
+  schemas:
+    Content:
+      type: object
+      required:
+        - content_id
+        - file_content
+        - file_name
+        - file_type
+        - sender_id
+        - receiver_id
+        - is_payable
+      properties:
+        content_id:
+          type: integer
+        file_content:
+          type: string
+          format: binary
+        file_name:
+          type: string
+        file_type:
+          type: string
+        sender_id:
+          type: string
+        receiver_id:
+          type: string
+        is_payable:
+          type: boolean
 
 paths:
-  /v1/content/{receiver_id}:
+  /{receiver_id}/content:
     get:
       summary: |
         Find files by receiver_id
@@ -20,25 +58,20 @@ paths:
       responses:
         '200':
           description: |
-            Success
+            List of content
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  file_id:
-                    type: string
-                  status:
-                    type: string
-                    enum: ["unpaid", "paid", "pending"]
-                  is_payable:
-                    type: bool
-  /v1/content/{file_id}/pay:
-    post:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Content"
+
+  /content/{content_id}/pay:
+    patch:
       summary: |
         Pay for payable content
       parameters:
-        - name: file_id
+        - name: content_id
           in: path
           required: true
           schema:
@@ -52,5 +85,5 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  content_id:
                     type: string
