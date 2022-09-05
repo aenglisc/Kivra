@@ -5,6 +5,9 @@
     {mod, {sender_app, []}},
     {applications, [
         kernel,
+        epgsql,
+        pgapp,
+        pgsql_migration,
         openapi_sender_server,
         stdlib
     ]},
