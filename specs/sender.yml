@@ -10,6 +10,15 @@ info:
       * receiver id
       * is_payable
 
+servers:
+  - url: http://localhost:{port}/{basePath}
+    description: Development server
+    variables:
+      port:
+        default: '8080'
+      basePath:
+        default: v1
+
 components:
   schemas:
     V1UploadPost:
@@ -37,7 +46,7 @@ components:
           type: boolean
 
 paths:
-  /v1/upload:
+  /upload:
     post:
       summary: |
         Upload a binary with metadata
