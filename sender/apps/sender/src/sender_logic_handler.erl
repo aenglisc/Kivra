@@ -14,10 +14,16 @@ handle_request('UploadPost', _Req, Context) ->
     Storage = storage(),
     Body = maps:get('V1UploadPost', Context),
     case Storage:upload(Body) of
-        {ok, {already_uploaded, _ID}} ->
-            {200, #{}, #{<<"message">> => <<"Already uploaded">>}};
+        {ok, {already_uploaded, ContentID}} ->
+            {200, #{}, #{
+                <<"message">> => <<"Already uploaded">>,
+                <<"content_id">> => integer_to_binary(ContentID)
+            }};
         {ok, ContentID} ->
-            {201, #{}, #{<<"message">> => <<"Success!">>, <<"id">> => integer_to_binary(ContentID)}}
+            {201, #{}, #{
+                <<"message">> => <<"Success!">>,
+                <<"content_id">> => integer_to_binary(ContentID)
+            }}
     end;
 handle_request(OperationID, Req, Context) ->
     error_logger:error_msg("Unknown request to process: ~p~n", [{OperationID, Req, Context}]),
