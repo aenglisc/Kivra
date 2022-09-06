@@ -1,4 +1,4 @@
-setup: build generate test release
+setup: up build generate test release
 
 build:
 	@echo "Building dev environment"
@@ -24,42 +24,6 @@ generate: \
 	generate_consumer_server \
 	generate_consumer_client
 
-release: \
-	release_sender \
-	release_consumer
-
-release_%:
-	@echo "Releasing $*"
-	@docker compose \
-		-f ./dockerfiles/docker-compose.yml \
-		exec $*_api rebar3 as dev release
-
-start: \
-	start_sender \
-	start_consumer
-
-start_%:
-	@echo "Starting $*"
-	@docker compose \
-		-f ./dockerfiles/docker-compose.yml \
-		exec $*_api _build/dev/rel/$*/bin/$* foreground
-
-start_%_interactive:
-	@echo "Starting $*"
-	@docker compose \
-		-f ./dockerfiles/docker-compose.yml \
-		exec $*_api rebar3 shell
-
-test: \
-	test_sender \
-	test_consumer
-
-test_%:
-	@echo "Testing $*"
-	@docker compose \
-		-f ./dockerfiles/docker-compose.yml \
-		exec $*_api rebar3 ct
-
 generate_%_server:
 	@echo "Generating $* API server"
 	@docker run \
@@ -81,6 +45,48 @@ generate_%_client:
 				-g erlang-client \
 				-o /local/$*/apps/openapi_$*_client \
 				--additional-properties packageName=openapi_$*_client
+
+release: \
+	release_sender \
+	release_consumer
+
+release_%:
+	@echo "Releasing $*"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api rebar3 as dev release
+
+start: \
+	start_sender \
+	start_consumer
+
+start_%:
+	@echo "Starting $*"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api _build/dev/rel/$*/bin/$* foreground
+
+interactive_start_%:
+	@echo "Starting $*"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api rebar3 shell
+
+test: \
+	test_sender \
+	test_consumer
+
+test_%:
+	@echo "Testing $*"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api rebar3 ct
+
+shell_%:
+	@echo "Connecting to $*'s container"
+	@docker compose \
+		-f ./dockerfiles/docker-compose.yml \
+		exec $*_api bash
 
 new_migration:
 	@echo "Creating a new migration"
