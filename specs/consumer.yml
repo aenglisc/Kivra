@@ -43,6 +43,13 @@ components:
           type: string
         is_payable:
           type: boolean
+    Payment:
+      type: object
+      required:
+        - content_id
+      properties:
+        content_id:
+          type: integer
 
 paths:
   /{receiver_id}/content:
@@ -66,18 +73,18 @@ paths:
                 items:
                   $ref: "#/components/schemas/Content"
 
-  /content/{content_id}/pay:
+  /content/pay:
     patch:
       summary: |
         Pay for payable content
-      parameters:
-        - name: content_id
-          in: path
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
       responses:
-        '200':
+        '201':
           description: |
             Success
           content:
@@ -85,5 +92,35 @@ paths:
               schema:
                 type: object
                 properties:
-                  content_id:
+                  message:
+                    type: string
+        '200':
+          description: |
+            Already paid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: |
+            Not payable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: |
+            Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
                     type: string
