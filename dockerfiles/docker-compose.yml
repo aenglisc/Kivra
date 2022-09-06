@@ -16,7 +16,7 @@ services:
       - ../sender/apps:/app/apps
       - ../sender/config:/app/config
       - ../sender/test:/app/test
-      - ../migrations:/app/priv/migrations
+      - ../migrations:/app/apps/sender/priv/migrations
     depends_on:
       db:
         condition: service_healthy
@@ -38,7 +38,7 @@ services:
       - ../consumer/apps:/app/apps
       - ../consumer/config:/app/config
       - ../consumer/test:/app/test
-      - ../migrations:/app/priv/migrations
+      - ../migrations:/app/apps/consumer/priv/migrations
     depends_on:
       db:
         condition: service_healthy

@@ -28,7 +28,7 @@ start() ->
         database => application:get_env(consumer, db_database, "postgres"),
         timeout => application:get_env(consumer, db_timeout, 4000)
     }),
-    pgsql_migration:migrate(Conn, "priv/migrations"),
+    pgsql_migration:migrate(Conn, code:priv_dir(consumer) ++ "/migrations"),
     epgsql:close(Conn),
     pgapp:connect([
         {size, 10},
