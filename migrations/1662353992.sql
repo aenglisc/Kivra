@@ -1,14 +1,14 @@
 -- Create content table
 -- :up
 CREATE TYPE PAYMENT_STATUS AS ENUM
-    ('unpaid', 'pending', 'paid');
+    ('unpaid', 'paid');
 
 CREATE TABLE content(
   id serial NOT NULL,
   sender_id character varying(255) NOT NULL,
   receiver_id character varying(255) NOT NULL,
-  file_type character varying(255) NOT NULL,
   file_name character varying(255) NOT NULL,
+  file_type character varying(255) NOT NULL,
   is_payable boolean NOT NULL DEFAULT FALSE,
   payment_status PAYMENT_STATUS NOT NULL DEFAULT 'unpaid',
   file_content bytea NOT NULL,
