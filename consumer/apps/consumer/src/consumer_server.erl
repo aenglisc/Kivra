@@ -5,7 +5,7 @@
 -define(APP, consumer).
 -define(DEFAULT_ACCEPTORS_POOLSIZE, 100).
 -define(DEFAULT_IP_ADDR, "::").
--define(DEFAULT_PORT, 8080).
+-define(DEFAULT_PORT, 8081).
 
 -spec child_spec() ->
     supervisor:child_spec().
