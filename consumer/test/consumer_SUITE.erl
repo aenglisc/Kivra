@@ -12,13 +12,21 @@
 
 -export([
     list_success/1,
-    list_empty/1
+    list_empty/1,
+    pay_not_found/1,
+    pay_non_payable/1,
+    pay_success/1,
+    pay_already_paid/1
 ]).
 
 all() ->
     [
         list_success,
-        list_empty
+        list_empty,
+        pay_not_found,
+        pay_non_payable,
+        pay_success,
+        pay_already_paid
     ].
 
 init_per_suite(Config) ->
@@ -49,3 +57,35 @@ list_empty(_Config) ->
     ),
     EmptyList = jsx:encode([]),
     ?assertMatch({ok, EmptyList, #{status := 200}}, Result).
+
+pay_not_found(_Config) ->
+    Result = openapi_consumer_client_default_api:content_pay_patch(
+        #{}, #{content_id => ?NOT_FOUND_CONTENT_ID}, #{
+            cfg => #{host => "http://localhost:8081"}
+        }
+    ),
+    ?assertMatch({error, _Body, #{status := 404}}, Result).
+
+pay_non_payable(_Config) ->
+    Result = openapi_consumer_client_default_api:content_pay_patch(
+        #{}, #{content_id => ?NON_PAYABLE_CONTENT_ID}, #{
+            cfg => #{host => "http://localhost:8081"}
+        }
+    ),
+    ?assertMatch({error, _Body, #{status := 422}}, Result).
+
+pay_success(_Config) ->
+    Result = openapi_consumer_client_default_api:content_pay_patch(
+        #{}, #{content_id => ?PAYMENT_SUCCESSFUL_CONTENT_ID}, #{
+            cfg => #{host => "http://localhost:8081"}
+        }
+    ),
+    ?assertMatch({ok, _Body, #{status := 201}}, Result).
+
+pay_already_paid(_Config) ->
+    Result = openapi_consumer_client_default_api:content_pay_patch(
+        #{}, #{content_id => ?ALREADY_PAID_CONTENT_ID}, #{
+            cfg => #{host => "http://localhost:8081"}
+        }
+    ),
+    ?assertMatch({ok, _Body, #{status := 200}}, Result).

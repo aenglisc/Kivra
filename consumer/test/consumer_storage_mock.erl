@@ -5,7 +5,7 @@
 
 -include("helpers.hrl").
 
--export([start/0, list_content/1, update_payment_status/1]).
+-export([start/0, list_content/1, pay_for_content/1]).
 -export([stop/0]).
 -export([init/1, handle_call/3, handle_cast/2]).
 
@@ -33,8 +33,10 @@ list_content(<<?RECEIVER_ID_WITH_CONTENT>>) ->
         }
     ].
 
-update_payment_status(_ContentID) ->
-    ok.
+pay_for_content(?PAYMENT_SUCCESSFUL_CONTENT_ID) -> {ok, success};
+pay_for_content(?NOT_FOUND_CONTENT_ID) -> {error, not_found};
+pay_for_content(?NON_PAYABLE_CONTENT_ID) -> {error, not_payable};
+pay_for_content(?ALREADY_PAID_CONTENT_ID) -> {error, paid}.
 
 init(Storage) ->
     {ok, Storage}.
